@@ -1,11 +1,13 @@
 from PyQt5.QtCore import QSettings, Qt
 from PyQt5.QtGui import QIcon, QMovie
 from PyQt5.QtWidgets import QAction, QWidget, QMainWindow, QToolBar, QToolButton, QVBoxLayout, QLabel, QPushButton
-from PyQt5.uic.properties import QtCore
 
 from ColorHex import ColorHex
 from LetterWindow import LetterWindow
 from NumberWindow import NumberWindow
+from BrainWindow import BrainWindow
+from VideoWindow import VideoWindow
+
 
 class MainWindow(QMainWindow):
 
@@ -78,23 +80,30 @@ class MainWindow(QMainWindow):
         letterButton.setText("Learn Letters")
         letterButton.clicked.connect(self.letters)
         letterButton.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
-                                    "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
+                                                                                              "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
 
         numberButton = QPushButton()
         numberButton.setText("Learn Numbers")
         numberButton.clicked.connect(self.numbers)
         numberButton.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
-                                   "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
+                                                                                              "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
 
         videoButton = QPushButton()
         videoButton.setText("Play with video camera")
         videoButton.clicked.connect(self.video)
         videoButton.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
-                                  "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
+                                                                                             "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
+
+        brainButton = QPushButton()
+        brainButton.setText("Brain project")
+        brainButton.clicked.connect(self.brain)
+        brainButton.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
+                                                                                             "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
 
         centerLayout.addWidget(letterButton, alignment=Qt.AlignCenter)
         centerLayout.addWidget(numberButton, alignment=Qt.AlignCenter)
         centerLayout.addWidget(videoButton, alignment=Qt.AlignCenter)
+        centerLayout.addWidget(brainButton, alignment=Qt.AlignCenter)
 
         finalLayout = QVBoxLayout()
         finalLayout.addLayout(leftLayout)
@@ -107,7 +116,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(wid)
         wid.setLayout(finalLayout)
 
-        self.letter_window = LetterWindow()
+
 
     def play_sound(self):
         pass
@@ -116,7 +125,8 @@ class MainWindow(QMainWindow):
         pass
 
     def letters(self):
-        self.close()
+        self.letter_window = LetterWindow()
+        # self.close()
         self.letter_window.show()
 
     def numbers(self):
@@ -124,8 +134,16 @@ class MainWindow(QMainWindow):
         self.close()
         self.number_window.show()
 
+    def brain(self):
+        self.brain_window = BrainWindow()
+        self.close()
+        self.brain_window.show()
+
     def video(self):
-        pass
+        self.videoWindow = VideoWindow()
+        # self.close()
+        self.videoWindow.show()
 
     def exitCall(self):
         self.close()
+

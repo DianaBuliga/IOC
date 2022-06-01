@@ -13,50 +13,58 @@ class NumberWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.layout = QVBoxLayout()
-        self.label = QLabel("Lern Window")
+        self.label = QLabel("Learn Window")
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
-        self.recognizer = sr.Recognizer()
-        self.microphone = sr.Microphone()
+        self.r = sr.Recognizer()
         action = 'Listening'
         print(action)
 
         self._createButtons()
 
     def _createButtons(self):
-        one = QPushButton()
+        saySomething = QPushButton()
+        saySomething.setText("Say a number")
+        saySomething.clicked.connect(lambda: self.SpeakText("Say something"))
+        self.layout.addWidget(saySomething)
 
-    def speech(self):
-        quitFlag = True
-        while quitFlag:
-            text = self.speechToText(self.recognizer, self.microphone)
-            if not text["success"] and text["error"] == "API unavailable":
-                print("ERROR: {}\nclose program".format(text["error"]))
-                break;
-            while not text["success"]:
-                print("I didn't catch that. What did you say?\n")
-                text = self.speechToText(self.recognizer, self.microphone)
-            if text["transcription"].lower() == "exit":
-                quitFlag = False
-            print(text["transcription"].lower())
 
-    def speechToText(self, recognizer, microphone):
-        with microphone as source:
-            recognizer.adjust_for_ambient_noise(source)
+    def SpeakText(self, command):
+        # Initialize the engine
+        engine = pyttsx3.init()
+        print("say something")
+        engine.say(command)
+        engine.runAndWait()
+        while 1:
 
-        audio = recognizer.listen(source)
-        response = {
-            "success": True,
-            "error": None,
-            "transcription": None
-        }
+            # Exception handling to handle
+            # exceptions at the runtime
+            try:
 
-        try:
-            response["transcription"] = recognizer.recognize_google(audio)
-        except sr.RequestError:
-            response["success"] = False
-            response["error"] = "API unavailable"
-        except sr.UnknownValueError:
-            response["success"] = False
-            response["error"] = "Unable to recognize speech"
-        return response
+                # use the microphone as source for input.
+                with sr.Microphone() as source2:
+
+                    # wait for a second to let the recognizer
+                    # adjust the energy threshold based on
+                    # the surrounding noise level
+                    self.r.adjust_for_ambient_noise(source2, duration=0.2)
+
+                    audio2 = self.r.listen(source2)
+
+                    # # listens for the user's input
+                    # audio2 = r.listen(source2)
+
+                    # Using google to recognize audio
+                    MyText = self.r.recognize(audio2)
+                    MyText = MyText.lower()
+
+                    print("Did you say " + MyText)
+                    self.SpeakText(MyText)
+
+            except sr.RequestError as e:
+                print("Could not request results; {0}".format(e))
+
+            except sr.UnknownValueError:
+                print("unknown error occured")
+
+
