@@ -1,5 +1,6 @@
-from PyQt5.QtCore import QSettings, Qt
+from PyQt5.QtCore import QSettings, Qt, QUrl
 from PyQt5.QtGui import QIcon, QMovie
+from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtWidgets import QAction, QWidget, QMainWindow, QToolBar, QToolButton, QVBoxLayout, QLabel, QPushButton
 
 from ColorHex import ColorHex
@@ -7,6 +8,7 @@ from LetterWindow import LetterWindow
 from NumberWindow import NumberWindow
 from BrainWindow import BrainWindow
 from VideoWindow import VideoWindow
+import sys, os
 
 
 class MainWindow(QMainWindow):
@@ -30,6 +32,7 @@ class MainWindow(QMainWindow):
         height = self.setting_window.value('window_height')
         width = self.setting_window.value('window_width')
         self.resize(int(width), int(height))
+        self.player = QMediaPlayer()
 
         self._createToolBar()
         self._createMainMenu()
@@ -43,12 +46,13 @@ class MainWindow(QMainWindow):
         exit_button.setStyleSheet("QToolButton:hover{"
                                   "background-color: " + self.colors.hookers_green + ";"
                                                                                      "color: " + self.colors.beau_blue + "}")
-        exit_button.triggered.connect(self.exitCall)
+        exit_button.clicked.connect(self.exitCall)
         play_sound_button = QToolButton()
         play_sound_button.setText("Play")
         play_sound_button.setStyleSheet("QToolButton:hover{"
                                         "background-color: " + self.colors.hookers_green + ";"
-                                                                                           "color: " + self.colors.beau_blue + "}")
+                                        "color: " + self.colors.beau_blue + "}")
+        print("gdaggrggergrgrasgsg")
         play_sound_button.triggered.connect(self.play_sound)
         play_sound_button.setCheckable(True)
         play_sound_button.setAutoExclusive(True)
@@ -116,13 +120,17 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(wid)
         wid.setLayout(finalLayout)
 
-
-
     def play_sound(self):
-        pass
+        print("gdagasgsg")
+        full_file_path = os.path.join(os.getcwd(), 'audio/morning_sound.mp3')
+        url = QUrl.fromLocalFile(full_file_path)
+        content = QMediaContent(url)
+
+        self.player.setMedia(content)
+        self.player.play()
 
     def mute_sound(self):
-        pass
+        self.player.setMuted(not self.player.isMuted())
 
     def letters(self):
         self.letter_window = LetterWindow()
@@ -131,12 +139,12 @@ class MainWindow(QMainWindow):
 
     def numbers(self):
         self.number_window = NumberWindow()
-        self.close()
+        # self.close()
         self.number_window.show()
 
     def brain(self):
         self.brain_window = BrainWindow()
-        self.close()
+        # self.close()
         self.brain_window.show()
 
     def video(self):
@@ -146,4 +154,3 @@ class MainWindow(QMainWindow):
 
     def exitCall(self):
         self.close()
-

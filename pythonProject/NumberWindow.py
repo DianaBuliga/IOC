@@ -17,6 +17,8 @@ class NumberWindow(QWidget):
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
         self.r = sr.Recognizer()
+        self.colors = ColorHex()
+        self.setStyleSheet("background-color:" + self.colors.opera_mauve)
         action = 'Listening'
         print(action)
 
@@ -26,6 +28,8 @@ class NumberWindow(QWidget):
         saySomething = QPushButton()
         saySomething.setText("Say a number")
         saySomething.clicked.connect(lambda: self.SpeakText("Say something"))
+        saySomething.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
+                                                                                             "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
         self.layout.addWidget(saySomething)
 
 

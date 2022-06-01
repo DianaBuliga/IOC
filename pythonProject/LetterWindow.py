@@ -17,7 +17,8 @@ class LetterWindow(QWidget):
         self.label = QLabel("Letter Window")
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
-
+        self.colors = ColorHex()
+        self.setStyleSheet("background-color:" + self.colors.opera_mauve)
         self._createButtons()
 
     def _createButtons(self):
@@ -34,6 +35,8 @@ class LetterWindow(QWidget):
                 letterButton = QPushButton()
                 letterButton.setText(letter)
                 letterButton.clicked.connect(lambda: self.textToSpeech(letter))
+                letterButton.setStyleSheet("QPushButton{background-color: " + self.colors.beau_blue + ";}"
+                                                                                             "QPushButton:hover{background-color: " + self.colors.middle_blue + ";}")
                 grid.addWidget(letterButton)
             self.layout.addLayout(grid)
 
