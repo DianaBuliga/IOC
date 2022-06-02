@@ -41,7 +41,8 @@ class LetterWindow(QWidget):
             self.layout.addLayout(grid)
 
         insertText = QLineEdit()
-        insertText.resize(400, 300)
+        insertText.setFixedHeight(300)
+        insertText.setStyleSheet("QLineEdit{font-size: 18pt;}")
         self.layout.addWidget(insertText)
         readText = QPushButton()
         readText.setText('Read Inserted Text')

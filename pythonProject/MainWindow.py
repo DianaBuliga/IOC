@@ -52,8 +52,8 @@ class MainWindow(QMainWindow):
         play_sound_button.setStyleSheet("QToolButton:hover{"
                                         "background-color: " + self.colors.hookers_green + ";"
                                         "color: " + self.colors.beau_blue + "}")
-        print("gdaggrggergrgrasgsg")
-        play_sound_button.triggered.connect(self.play_sound)
+
+        play_sound_button.clicked.connect(self.play_sound)
         play_sound_button.setCheckable(True)
         play_sound_button.setAutoExclusive(True)
         mute_sound_button = QToolButton()
@@ -63,7 +63,7 @@ class MainWindow(QMainWindow):
                                                                                            "color: " + self.colors.beau_blue + "}")
         mute_sound_button.setCheckable(True)
         mute_sound_button.setAutoExclusive(True)
-        mute_sound_button.triggered.connect(self.mute_sound)
+        mute_sound_button.clicked.connect(self.mute_sound)
 
         tools.addWidget(play_sound_button)
         tools.addWidget(mute_sound_button)
@@ -121,8 +121,7 @@ class MainWindow(QMainWindow):
         wid.setLayout(finalLayout)
 
     def play_sound(self):
-        print("gdagasgsg")
-        full_file_path = os.path.join(os.getcwd(), 'audio/morning_sound.mp3')
+        full_file_path = os.path.join(os.getcwd(), 'resources/audio/morning_sound.mp3')
         url = QUrl.fromLocalFile(full_file_path)
         content = QMediaContent(url)
 
