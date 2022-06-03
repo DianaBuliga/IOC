@@ -9,3 +9,4 @@ class ColorHex:
         self.blue_green = colors[2]
         self.middle_blue = colors[3]
         self.hookers_green = colors[4]
+        self.black = colors[5]

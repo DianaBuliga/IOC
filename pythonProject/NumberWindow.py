@@ -16,6 +16,7 @@ class NumberWindow(QWidget):
         super().__init__()
         self.layout = QVBoxLayout()
         self.label = QLabel("Learn Window")
+        self.label.setStyleSheet("QLabel{font-size: 18pt;}")
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
         self.r = sr.Recognizer()

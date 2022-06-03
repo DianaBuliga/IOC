@@ -40,9 +40,10 @@ class MainWindow(QMainWindow):
     def _createToolBar(self):
         tools = QToolBar()
         self.addToolBar(tools)
-        tools.setStyleSheet("QToolBar{background-color: " + self.colors.beau_blue + "}")
+        tools.setStyleSheet("QToolBar{background-color: " + self.colors.blue_green + "}")
         exit_button = QToolButton()
         exit_button.setText("Exit")
+        exit_button.clicked.connect(lambda: self.play_sound('resources/audio/click.mp3'))
         exit_button.setStyleSheet("QToolButton:hover{"
                                   "background-color: " + self.colors.hookers_green + ";"
                                                                                      "color: " + self.colors.beau_blue + "}")
@@ -53,7 +54,7 @@ class MainWindow(QMainWindow):
                                         "background-color: " + self.colors.hookers_green + ";"
                                         "color: " + self.colors.beau_blue + "}")
 
-        play_sound_button.clicked.connect(self.play_sound)
+        play_sound_button.clicked.connect(lambda: self.play_sound('resources/audio/morning_sound.mp3'))
         play_sound_button.setCheckable(True)
         play_sound_button.setAutoExclusive(True)
         mute_sound_button = QToolButton()
@@ -62,6 +63,7 @@ class MainWindow(QMainWindow):
                                         "background-color: " + self.colors.hookers_green + ";"
                                                                                            "color: " + self.colors.beau_blue + "}")
         mute_sound_button.setCheckable(True)
+        mute_sound_button.clicked.connect(lambda: self.play_sound('resources/audio/morning_sound.mp3'))
         mute_sound_button.setAutoExclusive(True)
         mute_sound_button.clicked.connect(self.mute_sound)
 
@@ -120,8 +122,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(wid)
         wid.setLayout(finalLayout)
 
-    def play_sound(self):
-        full_file_path = os.path.join(os.getcwd(), 'resources/audio/morning_sound.mp3')
+    def play_sound(self, path):
+        full_file_path = os.path.join(os.getcwd(), path)
         url = QUrl.fromLocalFile(full_file_path)
         content = QMediaContent(url)
 
@@ -132,24 +134,29 @@ class MainWindow(QMainWindow):
         self.player.setMuted(not self.player.isMuted())
 
     def letters(self):
+        self.play_sound('resources/audio/click.mp3')
         self.letter_window = LetterWindow()
         # self.close()
         self.letter_window.show()
 
     def numbers(self):
+        self.play_sound('resources/audio/morning_sound.mp3')
         self.number_window = NumberWindow()
         # self.close()
         self.number_window.show()
 
     def brain(self):
+        self.play_sound('resources/audio/morning_sound.mp3')
         self.brain_window = BrainWindow()
         # self.close()
         self.brain_window.show()
 
     def video(self):
+        self.play_sound('resources/audio/morning_sound.mp3')
         self.videoWindow = VideoWindow()
         # self.close()
         self.videoWindow.show()
 
     def exitCall(self):
+        self.play_sound('resources/audio/morning_sound.mp3')
         self.close()
