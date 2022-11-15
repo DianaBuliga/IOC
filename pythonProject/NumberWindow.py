@@ -57,6 +57,7 @@ class NumberWindow(QWidget):
                     self.insertText.setText(word)
                     if 0xFF == ord('q'):
                         break
-                except LookupError:
+                except sr.UnknownValueError as e:
+                    print("Error:", str(e))
                     print("Please, speak more clearly")
             repeat += 1
